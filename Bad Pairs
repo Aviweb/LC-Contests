@@ -1,0 +1,25 @@
+//         One Observation that changes the question is that we find the pairs that are not bad pairs, and nums[j]-j = nums[i]-i, so we need to store the frequency of (nums[i]-i) in a map and any two numbers with same diff of nums[i]-i will form a valid pair, so we need to select any two among those frequency count.
+//         For selecting the numbers of pairs we select any two out of the frequency of that number.
+//         After obtaining the total pairs which are not bad pairs we can subtract them from total possible pairs.
+        
+    long long countBadPairs(vector<int>& nums) 
+    {
+        map<int,int> st;
+            long long n=nums.size();
+            long long cnt=0;
+            for(int i=0;i<nums.size();i++)
+            {
+                   st[nums[i]-i]++;
+            }
+            for(auto x:st)
+            {
+                    if(x.second==1)
+                            continue;
+                    long long t=x.second;
+                    cnt+=(t*(t-1))/2;
+            }
+            
+            long long tot=(n*(n-1))/2;
+            return tot-cnt;;
+            
+    }
