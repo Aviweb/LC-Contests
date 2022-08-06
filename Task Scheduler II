@@ -1,0 +1,36 @@
+
+//         The approach is to count days using(i+j) but accessing the array by 'i' ( j counts the number of vacations made).
+        
+//        1.  We store the day at which particular type of activity is performed in a map. We check if particular activity is not performed                 earlier then we push it in the map along with the day number.
+        
+//        2. If the activity is already performed in past then we check the differnce of days between (the last occurence of this activity)                and (current day).  l=i+j-mp[task[i]]
+        
+//        3. if the diff is more than space then we perform it again without increasing j and assign the new day's value to current activity.
+        
+//        4.  else we count the jumps (or breaks ) we need to take from work and add it to j.
+
+        
+    long long taskSchedulerII(vector<int>& tasks, int space) 
+    {
+            long long j=0,i=0;
+            unordered_map<int,long long> mp;
+            for(i=0;i<tasks.size();i++)
+            {
+                    if(mp.find(tasks[i])==mp.end())
+                    {
+                            mp[tasks[i]]=i+j;
+                    }
+                    else
+                    {
+                            int l=i+j-mp[tasks[i]];
+                            if(l<=space)
+                            {
+                            long long jump=(space+mp[tasks[i]]-i-j)+1;  
+                            j=j+jump;
+                            }
+                            mp[tasks[i]]=i+j;     
+                            
+                    }
+            }
+            return tasks.size()+j;
+    }
