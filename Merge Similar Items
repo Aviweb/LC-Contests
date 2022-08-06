@@ -1,0 +1,43 @@
+    vector<vector<int>> mergeSimilarItems(vector<vector<int>>& items1, vector<vector<int>>& items2) {
+//             We Keep the bigger vector as item1 because we will store our result in this only and will also return it.
+              if(items1.size()<items2.size())
+                    return mergeSimilarItems(items2,items1);
+                    
+                    int i=0,j=0,n1=items1.size(),n2=items2.size();
+//             Sorting both the vectors on the basis of first element.
+            sort(items1.begin(),items1.end());   
+            sort(items2.begin(),items2.end());
+            
+//             We will Traverse until the any vector is finished.
+//             During traversal of vectors we check if any item matches then we add its weight to item1's corresponding element.
+//            if item2 element is more than item1 we increase the pointer of item1, because maybe the next element of item1 is equal to item1,
+//             But if item1 is greater than item2 we add item2 to item1 and increase the counter for item2.
+            while(i<n1 && j<n2)
+            {
+                    if(items1[i][0]==items2[j][0])
+                    {
+                            items1[i][1]+=items2[j][1];
+                            i++,j++;
+                    }
+                    else if(items1[i][0]>items2[j][0])
+                    {
+                            items1.push_back(items2[j]);
+                            j++;
+                    }
+                    else
+                    {
+                            i++;
+                    }
+            }
+            
+//             If remaining items2 are left to be inserted
+            while(j<n2)
+            {
+                    items1.push_back(items2[j]);
+                            j++;
+            }
+            // sorting because ans is required in sortede order
+            sort(items1.begin(),items1.end());
+            return items1;
+            
+    }
