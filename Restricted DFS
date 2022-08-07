@@ -1,0 +1,55 @@
+
+//         Do normal dfs if any node is not visted and not restricted. Do dfs only for allowed nodes
+//         Use vs vector for marking the restricted nodes marks them as -5
+//         After DFS is over count the visited nodes using a for loop
+        
+        
+        
+//         Normal DFS function
+        void dfs(int root,vector<int> adj[],vector<int>& vs)
+        {
+                for(auto x:adj[root])
+                {
+                        if(vs[x]==-1)
+                        {
+                                vs[x]=1;
+                                dfs(x,adj,vs);
+                        }
+                }
+        }
+        
+    int reachableNodes(int n, vector<vector<int>>& edges, vector<int>& restricted) 
+    {
+       
+//             Edge case
+            if(restricted.size()==n)
+                    return 0;
+            
+//             Obtaining the adjacency list
+            vector<int> adj[n];
+            for(int i=0;i<edges.size();i++)
+            {
+                    adj[edges[i][0]].push_back(edges[i][1]);
+                    adj[edges[i][1]].push_back(edges[i][0]);
+            }
+            
+            
+//             Marking the restricted nodes
+            vector<int> vs(n,-1);
+            for(int i=0;i<restricted.size();i++)
+            {
+                    vs[restricted[i]]=-5;
+            }
+            
+//             Calling the DFS from the root node
+            vs[0]=1;
+            dfs(0,adj,vs);
+            
+//             Counting the visited nodes
+            int cnt=0;
+            for(int i=0;i<n;i++)
+            {
+                    if(vs[i]!=-1 && vs[i]!=-5)
+                            cnt++;
+            }
+            return cnt;
