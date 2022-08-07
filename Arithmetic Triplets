@@ -1,0 +1,27 @@
+
+//         we find all the pairs diff using two nested loops.
+//         If any diff matches with the required "diff"  then we store the greater index(if j>i then we store the j in map)
+//         Then we if any other diff also matches and the smaller of the index is already prsesnt in map or not.
+
+int arithmeticTriplets(vector<int>& nums, int diff) 
+    {
+            int cnt=0;
+      unordered_map<int,int> st;
+            for(int i=0;i<nums.size();i++)
+            {
+                    for(int j=i+1;j<nums.size();j++)
+                    {
+                            if(nums[j]-nums[i]==diff)
+                            {
+                                    if(st.find(i)!=st.end())
+                                    {
+                                            cnt++;
+                                    }
+                                    
+                                    st[j]++;
+                            }
+                    }
+            }
+            int val=(cnt*(cnt-1)*(cnt-2))/6;
+            return cnt;
+    }
