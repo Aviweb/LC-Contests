@@ -1,0 +1,58 @@
+        
+//         WE have several cases for last 3 numbers consider the diff between the last three numbers.
+        
+//     if 0 0 then 1.we can take two similar elements and call the func for (n-2)  2.we can take three similar elements and call for (n-3)
+//     if 0 1 then we cant have any possible sequence so return false.
+//     if 1 0 then we take last two and call for n-2
+//     if 1 1 then we take three and call for n-3
+//     if any difference other than 0,1 is encountered we return false(but not in the case of last 2 having diff zero) 
+        // because if last two elements are having 0 diff then we dont need to bother about diff of n-1 and n-2 because last two are valid.
+        // but if diff of n-1 and n is not 0,1 we can definitely return false, but for n-2 and n-3 we need to be carefull. 
+        bool func(int n,vector<int>& nums)
+        {
+                if(n<=-1)
+                        return true;
+                if(n==0)
+                        return false;
+                if(n==1)
+                {
+                        if(nums[1]==nums[0])
+                                return true;
+                        else
+                                return false;
+                }
+                if(n==2)
+                {
+                        if(nums[n]==nums[n-1] && nums[n-1]==nums[n-2])
+                                return true;
+                        if(nums[n]-nums[n-1]==1 && nums[n-1]-nums[n-2]==1)
+                                return true;
+                        return false;
+                }
+                int l1,l2;
+                l1=nums[n-1]-nums[n-2];
+                l2=nums[n]-nums[n-1];
+                
+                
+                if(l2!=0 && l2!=1)
+                        return false;
+                        
+                if(l2==1 && l1==0)
+                        return false;
+                
+                if(l2==1 && l1!=1 && l1!=0)
+                        return false;
+                
+                if(l2==0 && l1==1)
+                        return func(n-2,nums);
+                
+                if(l2==1 && l1==1)
+                        return func(n-3,nums);
+                
+                return (func(n-2,nums) || func(n-3,nums));
+                
+        }
+        
+    bool validPartition(vector<int>& nums) {
+        return func(nums.size()-1,nums);
+    }
